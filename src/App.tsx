@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './scss/app.scss';
 import {Header} from "./components/Header/Header";
@@ -6,16 +6,24 @@ import {Button} from "./components/Button/Button";
 import {Categories} from "./components/Categories/Categories";
 import {SortPopup} from "./components/SortPoput/SortPopup";
 import {Home} from "./pages/Home";
-import { Route } from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import {Cart} from "./pages/Cart";
 
 function App() {
+    const [pizzas, setPizzas] = useState<[]>([])
+    useEffect(() => {
+        fetch('http://localhost:3001/db.json')
+            .then((res) => res.json())
+            .then((json) => {
+                setPizzas(json.pizzas)
+            })
+    }, [])
     return (
         <div className="wrapper">
             <Header/>
             <div className="content">
-              <Route path='/' component={Home} exact/>
-              <Route path='/cart' component={Cart} exact/>
+                <Route path='/' render={() => <Home items={pizzas}/>} exact/>
+                <Route path='/cart' component={Cart} exact/>
             </div>
         </div>
     );
