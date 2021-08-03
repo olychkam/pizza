@@ -8,15 +8,19 @@ import {SortPopup} from "./components/SortPoput/SortPopup";
 import {Home} from "./pages/Home";
 import {Route} from 'react-router-dom';
 import {Cart} from "./pages/Cart";
+import axios from "axios";
 
 function App() {
     const [pizzas, setPizzas] = useState<[]>([])
     useEffect(() => {
-        fetch('http://localhost:3001/db.json')
+      /*  fetch('http://localhost:3001/db.json')
             .then((res) => res.json())
             .then((json) => {
                 setPizzas(json.pizzas)
-            })
+            })*/
+        axios.get('http://localhost:3001/db.json').then(({data})=>{
+            setPizzas(data.pizzas)
+        })
     }, [])
     return (
         <div className="wrapper">

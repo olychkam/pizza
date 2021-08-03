@@ -1,12 +1,15 @@
 import React from 'react';
 import {Categories} from "../components/Categories/Categories";
-import {PizzaBlock} from "../components/PizzaBlock/PizzaBlock";
+import {PizzaBlock, PizzaBlockType} from "../components/PizzaBlock/PizzaBlock";
 
 type HomePropsType = {
     items: []
 }
 
 export function Home(props: HomePropsType) {
+    console.log(props.items)
+
+    // @ts-ignore
     return (
         <div className="container">
             <Categories onClick={(it) => {
@@ -16,9 +19,9 @@ export function Home(props: HomePropsType) {
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
                 {
-                    props.items.map(obj =>
+                    props.items.map((obj:PizzaBlockType) =>
                         // @ts-ignore
-                        <PizzaBlock key={obj.id} name={obj.name}/>
+                        <PizzaBlock key={obj.id} {...obj}/>
                     )
                 }
             </div>
